@@ -53,7 +53,7 @@ usage: shelldon [-h] [-c COMMAND] [-i IP] [-p PORT] [-a] [-w] [-y] [-e {single,d
 Create a customizable reverse shell with little effort!
 
 positional arguments:
-  method                (bash, perl, python, php, ruby, nc, java, powershell, ssh, configure)
+  method                (configure, bash, perl, python, php, ruby, nc, java, powershell, ssh)
 
 optional arguments:
   -h, --help            show this help message and exit

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-import argparse, configparser, sys, subprocess, os
+import argparse, configparser, sys, subprocess, os, pathlib
 
 # This function will return the IPv4 address associated with a given interface
 def getIP(interface):
@@ -78,7 +78,7 @@ def getShell(args):
 		newconfig = input("Enter new default configuration: ")
 		if newconfig != 'INIT' and newconfig in config:
 			config['INIT']['Config'] = newconfig
-			with open('shelldon.conf', 'w') as configfile:
+			with open(config_location, 'w') as configfile:
 				config.write(configfile)
 			print("Default configuration changed to %s (was %s)"%(newconfig,conf))
 		else:
@@ -143,7 +143,8 @@ def getShell(args):
 
 if __name__ == '__main__':
 	config = configparser.ConfigParser()
-	config.read('shelldon.conf')
+	config_location = "%s/%s"%(os.path.dirname(os.path.realpath(__file__)),'shelldon.conf')
+	config.read(config_location)
 	conf = config['INIT']['Config']
 
 	parser = argparse.ArgumentParser(description='Create a customizable reverse shell with little effort!', epilog="Thanks, Shelldon!")

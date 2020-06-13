@@ -83,7 +83,7 @@ def getShell(args):
 			config['INIT']['Config'] = newconfig
 			with open(config_location, 'w') as configfile:
 				config.write(configfile)
-			print("Default configuration changed to %s (was %s)"%(newconfig,conf))
+			print("Initial configuration changed to %s (was %s)"%(newconfig,conf))
 		else:
 			print("Configuration doesn't exist! Check your shelldon.conf file.")
 		return

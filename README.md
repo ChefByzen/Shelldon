@@ -76,7 +76,7 @@ Thanks, Shelldon!
 root@kali:/opt/shelldon# shelldon configure
 Possible configurations: ['default', 'htb']
 Enter new initial configuration: htb
-Default configuration changed to htb (was default)
+Initial configuration changed to htb (was default)
 ```
 The configure method allows you to change the initial configuration (located in the shelldon.conf file) used.
 

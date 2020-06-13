@@ -75,7 +75,10 @@ def getShell(args):
 		cmd = config[conf]['LinuxCmd']
 
 	if (args.method == "configure"):
-		newconfig = input("Enter new default configuration: ")
+		sections = config.sections()
+		sections.remove('INIT')
+		print('Possible configurations: %s'%(sections))
+		newconfig = input("Enter new initial configuration: ")
 		if newconfig != 'INIT' and newconfig in config:
 			config['INIT']['Config'] = newconfig
 			with open(config_location, 'w') as configfile:
@@ -147,7 +150,7 @@ if __name__ == '__main__':
 	config.read(config_location)
 	conf = config['INIT']['Config']
 
-	parser = argparse.ArgumentParser(description='Create a customizable reverse shell with little effort!', epilog="Thanks, Shelldon!")
+	parser = argparse.ArgumentParser(description='Generate a customizable reverse shell with little effort!', epilog="Thanks, Shelldon!")
 
 	parser.add_argument('method', metavar='method', help='(configure, bash, perl, python, php, ruby, nc, java, powershell, ssh)',choices=['configure', 'bash','perl','python','php','ruby','nc','java','powershell','ssh'])
 

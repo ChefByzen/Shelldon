@@ -1,5 +1,5 @@
 # Shelldon
-Shelldon is a simple python tool for creating a customizable reverse shell payload with very little effort.
+Shelldon is a simple python tool for generating customizable reverse shell payloads with very little effort.
 
 This is a tool I developed while working on HackTheBox machines for convenience. Instead of heading over to http://pentestmonkey.net/cheat-sheet/shells/reverse-shell-cheat-sheet every 5 minutes, changing the IP address, and having a time-consuming headache, I created this program.
 
@@ -51,7 +51,7 @@ The `.windowscmd` option is what will be used instead if the -w option is specif
 root@kali:/opt/shelldon# shelldon --help
 usage: shelldon [-h] [-c COMMAND] [-i IP] [-p PORT] [-a] [-w] [-y] [-e {single,double,both}] method
 
-Create a customizable reverse shell with little effort!
+Generate a customizable reverse shell with little effort!
 
 positional arguments:
   method                (configure, bash, perl, python, php, ruby, nc, java, powershell, ssh)
@@ -74,7 +74,8 @@ Thanks, Shelldon!
 ## Configure
 ```
 root@kali:/opt/shelldon# shelldon configure
-Enter new default configuration: htb
+Possible configurations: ['default', 'htb']
+Enter new initial configuration: htb
 Default configuration changed to htb (was default)
 ```
 The configure method allows you to change the initial configuration (located in the shelldon.conf file) used.

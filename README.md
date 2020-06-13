@@ -11,6 +11,7 @@ All you really need is python3.
 The following command is given for clipboard functionality and convenience.
 ```
 apt-get install python3 -y
+chmod +x $(locate shelldon.py)
 apt-get install xclip -y
 echo 'alias pbcopy='xclip -selection clipboard' >> ~/.bashrc
 echo 'alias pbpaste='xclip -selection clipboard' >> ~/.bashrc

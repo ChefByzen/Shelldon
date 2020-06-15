@@ -1,12 +1,18 @@
 #!/usr/bin/env python3
 import argparse, configparser, sys, subprocess, os, pathlib
 
-# This function will return the IPv4 address associated with a given interface
+# This function will return the IPv4 address associated with a given interface. If given interface does not exist, it will use the interface in the default configuration.
 def getIP(interface):
+	t1 = subprocess.Popen(["ifconfig"], stdout=subprocess.PIPE)
+	try:
+		t2 = subprocess.check_output(["grep", interface], stdin=t1.stdout).decode('utf-8').strip()
+	except subprocess.CalledProcessError:
+		interface = config['default']['interface']
+	
 	p1 = subprocess.Popen(["ifconfig"], stdout=subprocess.PIPE)
 	p2 = subprocess.Popen(["grep", interface, "-A1"], stdin=p1.stdout, stdout=subprocess.PIPE)
 	p3 = subprocess.Popen(["grep", "inet"], stdin=p2.stdout, stdout=subprocess.PIPE)
-	ip = subprocess.check_output(["cut", "-d", " ", "-f10"], stdin=p3.stdout).decode('utf-8').strip()
+	ip = subprocess.check_output(["cut", "-d", " ", "-f10"], stdin=p3.stdout).decode('utf-8').strip()	
 	return ip
 
 # This function will return the command for a bash reverse shell

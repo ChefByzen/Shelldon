@@ -7,22 +7,24 @@ Once properly configured, you can generate the command for a python reverse-shel
 
 # Installation
 All you really need is python3.
-
-The following command is given for clipboard functionality and convenience.
 ```
 apt-get install python3 -y
 chmod +x $(locate shelldon.py)
-apt-get install xclip -y
-echo 'alias pbcopy='xclip -selection clipboard' >> ~/.bashrc
-echo 'alias pbpaste='xclip -selection clipboard' >> ~/.bashrc
 ln -s $(locate shelldon.py) /usr/local/sbin/shelldon
 ```
 
-# Important Files
-Be sure to edit your preferences in the shelldon.conf file.
+The following command is given for clipboard functionality and convenience.
+```
+apt-get install xclip -y
+echo 'alias pbcopy='xclip -selection clipboard' >> ~/.bashrc
+echo 'alias pbpaste='xclip -selection clipboard' >> ~/.bashrc
+```
+
+# Optional Configuration
+If you would like to use Shelldon outside of HackTheBox, be sure to specify your main network interface (check your `ifconfig` output) in the shelldon.conf file.
 ```
 [INIT]
-config = default
+config = htb
 
 [default]
 interface = eth0

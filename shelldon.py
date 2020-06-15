@@ -3,8 +3,8 @@ import argparse, configparser, sys, subprocess, os, pathlib
 
 # This function will return the IPv4 address associated with a given interface. If given interface does not exist, it will use the interface in the default configuration.
 def getIP(interface):
-	t1 = subprocess.Popen(["ifconfig"], stdout=subprocess.PIPE)
 	try:
+		t1 = subprocess.Popen(["ifconfig"], stdout=subprocess.PIPE)
 		t2 = subprocess.check_output(["grep", interface], stdin=t1.stdout).decode('utf-8').strip()
 	except subprocess.CalledProcessError:
 		interface = config['default']['interface']
@@ -13,6 +13,10 @@ def getIP(interface):
 	p2 = subprocess.Popen(["grep", interface, "-A1"], stdin=p1.stdout, stdout=subprocess.PIPE)
 	p3 = subprocess.Popen(["grep", "inet"], stdin=p2.stdout, stdout=subprocess.PIPE)
 	ip = subprocess.check_output(["cut", "-d", " ", "-f10"], stdin=p3.stdout).decode('utf-8').strip()	
+	
+	if (not ip):
+		print("The network interface %s does not exist. Please check ifconfig and put an existing interface into your shelldon.conf file."%(interface)) 
+
 	return ip
 
 # This function will return the command for a bash reverse shell
@@ -76,9 +80,9 @@ def sshKey():
 # This function parses the arguments given and prints (or copies to clipboard) the command for a reverse shell
 def getShell(args):
 	if (args.windows):
-		cmd = config[conf]['WindowsCmd']
+		cmd = config[conf]['windowscmd']
 	else:
-		cmd = config[conf]['LinuxCmd']
+		cmd = config[conf]['linuxcmd']
 
 	if (args.method == "configure"):
 		sections = config.sections()
@@ -86,7 +90,7 @@ def getShell(args):
 		print('Possible configurations: %s'%(sections))
 		newconfig = input("Enter new initial configuration: ")
 		if newconfig != 'INIT' and newconfig in config:
-			config['INIT']['Config'] = newconfig
+			config['INIT']['config'] = newconfig
 			with open(config_location, 'w') as configfile:
 				config.write(configfile)
 			print("Initial configuration changed to %s (was %s)"%(newconfig,conf))
@@ -154,7 +158,7 @@ if __name__ == '__main__':
 	config = configparser.ConfigParser()
 	config_location = "%s/%s"%(os.path.dirname(os.path.realpath(__file__)),'shelldon.conf')
 	config.read(config_location)
-	conf = config['INIT']['Config']
+	conf = config['INIT']['config']
 
 	parser = argparse.ArgumentParser(description='Generate a customizable reverse shell with little effort!', epilog="Thanks, Shelldon!")
 
@@ -162,9 +166,9 @@ if __name__ == '__main__':
 
 	parser.add_argument('-c', metavar='COMMAND', action='store', help='Non-regular name of program (Ex. nc.exe)')
 	parser.add_argument('-i', '--ip', action='store', help='Listening ip address')
-	parser.add_argument('-p', '--port', action='store', type=int, help='Listening port', default=config[conf]['Port'])
+	parser.add_argument('-p', '--port', action='store', type=int, help='Listening port', default=config[conf]['port'])
 	parser.add_argument('-a', '--alternate', action='store_true', help='Alternate functionality')
-	parser.add_argument('-w', '--windows', action='store_true', help='Runs %s instead of %s'%(config[conf]['WindowsCmd'],config[conf]['LinuxCmd']))
+	parser.add_argument('-w', '--windows', action='store_true', help='Runs %s instead of %s'%(config[conf]['windowscmd'],config[conf]['linuxcmd']))
 	parser.add_argument('-y', '--clipboard', action='store_true', help='Saves command to clipboard instead of printing')
 	parser.add_argument('-e', '--escape', help='Escapes single or double quotes. Useful for pasting', choices=['single','double','both'])
 
@@ -175,6 +179,6 @@ if __name__ == '__main__':
 	args = parser.parse_args()
 
 	if (not args.ip):
-		args.ip = getIP(config[conf]['Interface'])
+		args.ip = getIP(config[conf]['interface'])
 
 	getShell(args)

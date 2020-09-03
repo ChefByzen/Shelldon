@@ -1,13 +1,14 @@
 # Shelldon
 Shelldon is a simple python tool for generating customizable reverse shell payloads with very little effort.
 
-This is a tool I developed while working on HackTheBox machines for convenience. Instead of heading over to http://pentestmonkey.net/cheat-sheet/shells/reverse-shell-cheat-sheet every 5 minutes, changing the IP address, and having a time-consuming headache, I created this program.
+This is a tool I developed while working on HackTheBox machines for convenience. Instead of heading over to https://web.archive.org/web/20180426234913/http://pentestmonkey.net/cheat-sheet/shells/reverse-shell-cheat-sheet every 5 minutes, changing the IP address, and having a time-consuming headache, I created this program.
 
 Once properly configured, you can generate the command for a python reverse-shell (with the correct IP address) as simply as `shelldon python`. This program is extremely basic, so feel free to improve it on your own time. I'm not interested in actively maintaining this, however I'm open to making improvements to it.
 
 # Installation
 All you really need is python3.
 ```
+git clone https://github.com/ChefByzen/Shelldon.git
 apt-get install python3 -y
 chmod +x $(locate shelldon.py)
 ln -s $(locate shelldon.py) /usr/local/sbin/shelldon

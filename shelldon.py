@@ -12,7 +12,8 @@ def getIP(interface):
 	p1 = subprocess.Popen(["ifconfig"], stdout=subprocess.PIPE)
 	p2 = subprocess.Popen(["grep", interface, "-A1"], stdin=p1.stdout, stdout=subprocess.PIPE)
 	p3 = subprocess.Popen(["grep", "inet"], stdin=p2.stdout, stdout=subprocess.PIPE)
-	ip = subprocess.check_output(["cut", "-d", " ", "-f10"], stdin=p3.stdout).decode('utf-8').strip()	
+	p4 = subprocess.Popen(["cut", "-d", " ", "-f10"], stdin=p3.stdout, stdout=subprocess.PIPE)
+	ip = subprocess.check_output(["head", "-1"], stdin=p4.stdout).decode('utf-8').strip()	
 	
 	if (not ip):
 		print("The network interface %s does not exist. Please check ifconfig and put an existing interface into your shelldon.conf file."%(interface)) 
